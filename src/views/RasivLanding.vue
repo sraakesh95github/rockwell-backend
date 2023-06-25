@@ -7,7 +7,7 @@
         <md-button @click="getItemsList">GO</md-button>
       </div>
 
-      <div id="list_resources">
+      <div class="list_resources">
         <list-cards :resources="listItems"></list-cards>
       </div>
     </div>
@@ -23,7 +23,36 @@ export default {
   data() {
     return {
       searchString: '',
-      resources: []
+      resources: [{
+        id: "1",
+        name: "TestName1",
+        summary: "TestSummary1",
+        link: "www.google.com" 
+      },
+      {
+        id: "2",
+        name: "TestName2",
+        summary: "We launched ChatGPT as a research preview so we could learn more about the system’s strengths and weaknesses and gather user feedback to help us improve upon its limitations. Since then, millions of people have given us feedback, we’ve made several important updates and we’ve seen users find value across a range of professional use-cases, including drafting & editing content, brainstorming ideas, programming help, and learning new topics. We launched ChatGPT as a research preview so we could learn more about the system’s strengths and weaknesses and gather user feedback to help us improve upon its limitations. We launched ChatGPT as a research preview so we could learn more about the system’s strengths and weaknesses and gather user feedback to help us improve upon its limitations.",
+        link: "www.google.com" 
+      },
+      {
+        id: "3",
+        name: "TestName3",
+        summary: "TestSummary3",
+        link: "www.google.com" 
+      },
+      {
+        id: "4",
+        name: "TestName4",
+        summary: "TestSummary4",
+        link: "www.google.com" 
+      },
+      {
+        id: "5",
+        name: "TestName5",
+        summary: "TestSummary5",
+        link: "www.google.com" 
+      }]
     }
   },
   computed: {
@@ -63,15 +92,15 @@ export default {
 </script>
 
 <style scoped>
-div.list_resources {
-  margin: 0;
-  width: 80%;
-}
-
-div {
+.list_resources {
   margin: auto;
   width: 80%;
 }
+/* 
+div {
+  margin: auto;
+  width: 80%;
+} */
 
 .searchBar {
   padding-left: 0%;
@@ -85,5 +114,7 @@ div {
 .searchContainer {
   display: flex;
   padding-bottom: 50px;
+  width: 80%;
+  margin: auto;
 }
 </style>

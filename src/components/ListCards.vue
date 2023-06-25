@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card-container">
         <card-content v-for="res in resources" :key="res.id" :documentContent="res">
         </card-content>
     </div>
@@ -16,3 +16,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+</style>
