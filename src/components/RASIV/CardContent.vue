@@ -24,6 +24,7 @@
                     </md-button>
                 </div>
             </md-card-actions>
+
         </md-card>
     </div>
 </template>
@@ -61,8 +62,12 @@ export default {
             .then(function(response) {
                 console.log("Latest document votes: " + response.data)
             })
+        },
+        documentLink(name) {
+            console.log("Card " + name + " has been clicked")
+            return this.documentContent.link
         }
-    }
+    },
 }
 </script>
 

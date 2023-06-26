@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import ListCards from '/src/components/ListCards.vue'
+import ListCards from '/src/components/RASIV/ListCards.vue'
 
 export default {
   components: {
@@ -113,6 +113,7 @@ div {
 
 .searchContainer {
   display: flex;
+  padding-top: 50px;
   padding-bottom: 50px;
   width: 80%;
   margin: auto;

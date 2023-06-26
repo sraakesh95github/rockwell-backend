@@ -1,27 +1,26 @@
 <template>
   <div id="app">
-    <rasiv-landing></rasiv-landing>>
+      <landing-page></landing-page>
   </div>
 </template>
 
 <script>
-import RasivLanding from './views/RasivLanding.vue'
+import LandingPage from './components/Common/LandingPage'
 
 export default {
   name: 'App',
   components: {
-    RasivLanding
+    LandingPage
   }
 }
 </script>
 
 <style>
-/* #app {
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-} */
+}
 </style>
