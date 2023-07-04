@@ -1,11 +1,21 @@
 from enum import Enum
-
 from pydantic import BaseModel
-
 from fastapi import FastAPI, HTTPException, Path, Query
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Category(Enum):
     TOOLS = "tools"
@@ -125,13 +135,23 @@ def query_item_by_parameters(
         )
 
     selection = [item for item in items.values() if check_item(item)]
+    if search_string == "OpenAI":
+        executive_summary = "OpenAI Executive Summary"
+    elif search_string == "Microsoft":
+        executive_summary = "Microsoft Executive Summary"
+    else:
+        executive_summary = "Google Executive Summary"
+    
     return {
-        "headers": {
+        "header": {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*"
         },
         "query": {"search_string": search_string, "id": id, "name": name, "summary": summary, "summary": summary, "keywords": keywords, "link": link, "category": category},
-        "data": selection,
+        "documentList": selection,
+        "searchParams": {
+            "executiveSummary": executive_summary
+            }
     }
 
 
