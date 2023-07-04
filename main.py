@@ -13,17 +13,72 @@ class Category(Enum):
 
 
 class Item(BaseModel):
+    search_string: str
+    id: str
     name: str
-    price: float
-    count: int
-    id: int
-    category: Category
+    summary: str
+    keywords: list
+    link: str
+    category: str
 
 
 items = {
-    0: Item(name="Hammer", price=9.99, count=20, id=0, category=Category.TOOLS),
-    1: Item(name="Pliers", price=5.99, count=20, id=1, category=Category.TOOLS),
-    2: Item(name="Nails", price=1.99, count=100, id=2, category=Category.CONSUMABLES),
+    0: Item(search_string="OpenAI",
+        id="123",
+        name="GPT-4",
+        summary="Test Summary",
+        keywords=["A", "B", "C"],
+        link="https://www.google.com/",
+        category=""
+    ),
+    1: Item(search_string="OpenAI",
+        id="145",
+        name="ChatGPT",
+        summary="Test Summary",
+        keywords=["A", "B", "C"],
+        link="https://www.google.com/",
+        category=""
+    ),
+    3: Item(search_string="OpenAI",
+        id="156",
+        name="DALL-E",
+        summary="Test Summary",
+        keywords=["A", "B", "C"],
+        link="https://www.google.com/",
+        category=""
+    ),
+    4: Item(search_string="Microsoft",
+        id="213",
+        name="Azure OpenAI",
+        summary="Test Summary",
+        keywords=["A", "B", "C"],
+        link="https://www.google.com/",
+        category=""
+    ),
+    5: Item(search_string="Microsoft",
+        id="245",
+        name="Cognitive Search",
+        summary="Test Summary",
+        keywords=["A", "B", "C"],
+        link="https://www.google.com/",
+        category=""
+    ),
+    6: Item(search_string="Google",
+        id="345",
+        name="Bard",
+        summary="Test Summary",
+        keywords=["A", "B", "C"],
+        link="https://www.google.com/",
+        category=""
+    ),
+    7: Item(search_string="Google",
+        id="356",
+        name="Med-PaLM 2",
+        summary="Test Summary",
+        keywords=["A", "B", "C"],
+        link="https://www.google.com/",
+        category=""
+    ),
 }
 
 
@@ -47,26 +102,36 @@ Selection = dict[
 
 @app.get("/items/")
 def query_item_by_parameters(
+    search_string: str | None = None,
+    id: str | None = None,
     name: str | None = None,
-    price: float | None = None,
-    count: int | None = None,
-    category: Category | None = None,
+    summary: str | None = None,
+    keywords: list | None = None,
+    link: str | None = None,
+    category: str | None = None,
 ) -> dict[str, Selection | list[Item]]:
     def check_item(item: Item):
         """Check if the item matches the query arguments from the outer scope."""
         return all(
             (
-                name is None or item.name == name,
-                price is None or item.price == price,
-                count is None or item.count != count,
-                category is None or item.category is category,
+                search_string is None or item.search_string == search_string,
+                id is None or item.id == id,
+                name is None or item.name != name,
+                summary is None or item.summary is summary,
+                keywords is None or item.keywords == keywords,
+                link is None or item.link == link,
+                category is None or item.category != category,
             )
         )
 
     selection = [item for item in items.values() if check_item(item)]
     return {
-        "query": {"name": name, "price": price, "count": count, "category": category},
-        "selection": selection,
+        "headers": {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        "query": {"search_string": search_string, "id": id, "name": name, "summary": summary, "summary": summary, "keywords": keywords, "link": link, "category": category},
+        "data": selection,
     }
 
 
