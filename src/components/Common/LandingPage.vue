@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <md-app md-waterfall md-mode="fixed-last">
+    <md-app md-waterfall md-mode="fixed">
         <md-app-toolbar class="md-large md-dense md-primary" id="header-container">
           <div class="navigation">
             <div class="md-toolbar-row">
@@ -48,14 +48,17 @@
 
         <md-app-content>
         <rasiv-landing></rasiv-landing>
-    </md-app-content>
-      </md-app>
+        </md-app-content>
+
+        <page-footer></page-footer>
+    </md-app>
   </div>
 </template>
 
 <script>
 // import Menu from '/node_modules/vue-material-design-icons/Menu.vue';
 import RasivLanding from '@/views/RasivLanding.vue';
+import PageFooter from '/src/components/Common/PageFooter'
 
 export default {
     name: "LandingPage",
@@ -66,7 +69,8 @@ export default {
     },
     components: {
       // Menu,
-      RasivLanding
+      RasivLanding,
+      PageFooter
     },
     computed: {
       menuVisibility() {
@@ -78,7 +82,7 @@ export default {
 
 <style lang="scss" scoped>
   .md-app {
-    // max-height: 400px;
+    max-height: 925px;
     border: 1px solid rgba(#000, .12);
   }
 
@@ -106,16 +110,21 @@ export default {
     width: 60px;
     height: 60px;
   }
+
   .navigation {
     width: 90%;
   }
 
   #header-container {
-    background-color: hsl(0, 44%, 87%);
+    background-color: hsl(0, 20%, 96%);
   }
 
   .md-title {
     font-weight: bold;
     color: #000;
   }
+
+  // .page-container {
+  //   min-height: calc(100vh - 4rem);
+  // }
 </style>
