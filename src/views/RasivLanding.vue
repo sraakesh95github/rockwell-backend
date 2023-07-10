@@ -71,7 +71,7 @@
             </div>
 
             <div class="list_resources">
-                <list-cards :resources="listItems"></list-cards>
+                <list-cards :resources="documentList"></list-cards>
             </div>   
     </div>
 </template>
@@ -80,13 +80,15 @@
 import ListCards from '/src/components/RASIV/ListCards.vue'
 
 export default {
+  props: {
+    documentList: Object,
+    executiveSummary: String 
+  },
   components: {
     ListCards
   },
   data() {
     return {
-      searchString: '',
-      executiveSummary: 'Watson is an artificial intelligence platform developed by IBM. It leverages various AI technologies, including natural language processing, machine learning, and data analytics, to provide a wide range of cognitive computing capabilities. The Watson platform offers a suite of services and tools that enable businesses and developers to harness the power of AI in diverse applications. It can process and analyze large volumes of structured and unstructured data, including text, images, and audio, to extract valuable insights and make informed decisions. One of the notable features of Watson is its natural language understanding and processing capabilities. It can comprehend and interpret human language, allowing for advanced language-based interactions and applications. Watson can perform tasks such as language translation, sentiment analysis, speech recognition, and language generation.',
       separatorVisible: false,
       scoreSummary: 15,
       resources: [{
@@ -127,14 +129,15 @@ export default {
   },
   computed: {
     listItems() {
-      return this.resources;
+      console.log("Document list updated: " + this.documentList);
+      return this.documentList;
     }
   },
   methods: {
     getItemsList() {
       this.separatorVisible=true;
-      console.log("searchString: " + this.searchString)
-      fetch('http://127.0.0.1:8000/items?search_string=' + this.searchString)
+      console.log("searchString: " + this.searchText)
+      fetch('http://127.0.0.1:8000/items?search_string=' + this.searchText)
       .then((response) => {
         if(response.ok) {
           return response.json();
