@@ -3,7 +3,7 @@
         class="toolbar-container"
         :elevation="1"
         dense
-        floating
+        fixed
       >
 
       <div class="header-logo">
@@ -11,17 +11,72 @@
       </div>
 
       <div class="mr-auto my-2 search-container">
-        <v-text-field
-          hide-details
-          density="compact"
-          variant="outlined"
-          persistent-clear
-          clearable
-          placeholder="Search white papers"
-          append-inner-icon="mdi-magnify"
-          v-model="searchString"
-          @click:append-inner="getItemsList"
-        ></v-text-field>
+        <v-menu transition="scroll-y-transition">
+            <template v-slot:activator="{ props }">
+                <v-text-field
+                hide-details
+                density="compact"
+                variant="outlined"
+                persistent-clear
+                clearable
+                placeholder="Search white papers"
+                append-inner-icon="mdi-magnify"
+                v-model="searchString"
+                v-bind="props"
+                @click:append-inner="getItemsList"
+                @click="getQueryHistory"
+                ></v-text-field>
+            </template>
+
+            <v-list>
+                <v-list-item
+                v-for="query in queryHistoryList"
+                :key="query"
+                link
+                >
+                <v-list-item-title v-text="query"></v-list-item-title>
+                </v-list-item>
+            </v-list>
+
+        </v-menu>
+      </div>
+
+      
+
+      <div class="toolbar-actions">
+        <v-menu transition="slide-y-transition">
+        <template v-slot:activator="{ props }">
+            <v-btn
+                rounded
+                class="ma-2"
+                color="blue"
+                size="x-large"
+                prepend-icon="mdi-file-upload"
+                variant="tonal"
+                v-bind="props">File Upload
+            </v-btn>
+        </template>
+        <!-- <div class="file-input"> -->
+            <v-card
+            class="mx-auto file-input"
+            color="blue"
+            variant="outlined">
+                <v-card-item>
+                    <v-file-input
+                            dark
+                            show-size
+                            counter
+                            multiple
+                            label="Click Here"
+                        ></v-file-input>
+                </v-card-item>
+            </v-card>
+        <!-- </div> -->
+        </v-menu>
+      </div>
+
+      <div class="text-h4 text-center text-grey">
+        &nbsp; &nbsp; RASIV PORTAL &nbsp; &nbsp;
       </div>
   
         <!-- <v-btn icon>
@@ -34,11 +89,12 @@
 
       </v-toolbar>
 
-      <v-icon icon="fa:fas fa-lock"></v-icon>
+      <!-- <v-icon icon="fa:fas fa-lock"></v-icon> -->
 
       <rasiv-landing
       :documentList="resources"
-      :executiveSummary="executiveSummary"></rasiv-landing>
+      :executiveSummary="executiveSummary">
+      </rasiv-landing>
 
   </template>
   
@@ -46,11 +102,14 @@
   // import Menu from '/node_modules/vue-material-design-icons/Menu.vue';
   import RasivLanding from '/src/views/RasivLanding';
 //   import PageFooter from '/src/components/Common/PageFooter'
+import FileUpload from '/src/components/RASIV/FileUpload'
   
   export default {
       name: "LandingPage",
       data()  {
         return {
+            fileUploadVisible: false,
+            queryHistoryList: ['Query 1', 'Query 2'],
             resources: [{
                 id: "1",
                 name: "TestName1",
@@ -91,19 +150,27 @@
       },
       components: {
         // Menu,
-        RasivLanding
+        RasivLanding,
+        FileUpload
         // PageFooter
       },
       computed: {
         menuVisibility() {
           return !this.menuVisible;
+        },
+        fileUploadVisibility() {
+            console.log("Show file upload called...")
+            return this.fileUploadVisible
         }
       },
       methods: {
-    getItemsList() {
+      getQueryHistory() {
+        console.log("Query history called...")
+      },
+      getItemsList() {
       this.separatorVisible=true;
       console.log("searchString: " + this.searchString)
-      fetch('http://127.0.0.1:8000/items?search_string=' + this.searchString)
+      fetch('http://127.0.0.1:8000/llm?query=' + this.searchString)
       .then((response) => {
         if(response.ok) {
           return response.json();
@@ -130,12 +197,21 @@
         this.resources = results;
         this.executiveSummary = executiveSummary;
       })
+      },
+      showFileUpload() {
+        console.log("File upload: " + this.fileUploadVisible)
+        this.fileUploadVisible = !this.fileUploadVisible
+        return this.fileUploadVisible
       }
     }
   }
   </script>
   
   <style lang="scss" scoped>
+    .file-input {
+        background-color: rgb(71, 68, 68);
+        min-width: 500px;
+    }
 
     .search-container {
         width: 50%;

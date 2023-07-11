@@ -1,5 +1,57 @@
 <template>
-    <div class="mainContainer">
+
+    <div class="executive-summary">
+        <v-card
+            class="mx-auto"
+            variant="outlined"
+            width="80%"
+        >
+            <v-card-item>
+                <div>
+                    <div class="text-h5">
+                    Executive Summary
+                    </div>
+                    <div class="text-body-1">{{executiveSummary}}</div>
+                    <div class="summary-feedback">
+                            <v-btn
+                                class="summary-button"
+                                small
+                                outlined
+                                elevation="0"
+                                variant="tonal"
+                                icon="mdi-thumb-up">
+                            </v-btn>
+
+                            <v-btn
+                                class="summary-button"
+                                small
+                                outlined
+                                :elevation="0"
+                                variant="tonal"
+                                icon="mdi-thumb-down"
+                                @click="expandSummaryFeedback = !expandSummaryFeedback">
+                            </v-btn>
+                    </div>
+
+                    <v-expand-transition>
+                    <div 
+                        class="summary-feedback-text"
+                        v-show="expandSummaryFeedback">
+                            <v-textarea
+                                outlined
+                                name="summary-feedback-text"
+                                label="Please enter feeback and submit..."
+                                input="summaryFeedbackText"
+                                ></v-textarea>
+                        </div>
+                    </v-expand-transition>
+                </div>
+            </v-card-item>
+            
+        </v-card>
+    </div>
+
+    <!-- <div class="mainContainer"> -->
       <!-- <div class="searchContainer">
         
         <md-field md-transparent md-clearable>
@@ -51,29 +103,13 @@
                 </div> -->
             <!-- </div> -->
 
-            <div class="executive-summary">
-
-                <v-card
-                    class="mx-auto"
-                    variant="outlined"
-                >
-                    <v-card-item>
-                    <div>
-                        <div class="text-h5 my-1">
-                        Executive Summary
-                        </div>
-                        <div class="text-body-1">{{executiveSummary}}</div>
-                    </div>
-                    </v-card-item>
-
-                </v-card>
-
-            </div>
-
-            <div class="list_resources">
-                <list-cards :resources="documentList"></list-cards>
-            </div>   
-    </div>
+    <div class="list_resources">
+        <div class="text-h5 text-center">
+            Retrieved Documents
+        </div>
+        <list-cards :resources="documentList"></list-cards>
+    </div>   
+    <!-- </div> -->
 </template>
 
 <script>
@@ -90,6 +126,8 @@ export default {
   data() {
     return {
       separatorVisible: false,
+      summaryFeedbackText: "",
+      expandSummaryFeedback: false,
       scoreSummary: 15,
       resources: [{
         id: "1",
@@ -172,6 +210,10 @@ export default {
 <style lang="scss" scoped>
 .list_resources {
   margin: auto;
+  width: 80%;
+  overflow-y: auto;
+  align-self: center;
+  margin-top: 30px;
 }
 
 .goButton {
@@ -180,11 +222,6 @@ export default {
   width: 40px;
 }
 
-.mainContainer {
-  width: 80%;
-  margin: auto;
-  align-self: center;
-}
 
 .searchContainer {
   display: flex;
@@ -194,8 +231,9 @@ export default {
 }
 
 .executive-summary {
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     padding-top: 20px;
+    background-color: rgb(238, 238, 238);
     margin: auto;
 }
 
@@ -211,5 +249,14 @@ export default {
 
 .summary-score-title {
   font-weight: bold;
+}
+
+.summary-feedback {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.summary-button {
+    background-color: rgba(255, 251, 255, 0.651)
 }
 </style>

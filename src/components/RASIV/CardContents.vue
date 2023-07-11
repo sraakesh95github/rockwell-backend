@@ -2,73 +2,73 @@
     <div>
 
         <v-card 
-        d-flex width="350" 
+        width="1400" 
         variant="tonal"
         class="card-box"
-        :elevation="1">
+        color="dark"
+        elevation="1">
 
-            <v-card-item class="card-area">
+            <div class="main-content-area">
 
-                    <v-card-title>
-                        <div @click="documentLink(documentContent)">{{documentContent.name}}</div>
-                    </v-card-title>
+                <v-card-item 
+                    class="card-area"
+                    @click="documentLink(documentContent)">
 
-            </v-card-item>
-                    <!-- <v-card-text
-                    class="card-content">
-                        <div @click="documentLink(documentContent)" class="md-subheading">
-                        {{documentContent.summary}}
-                        </div>
-                    </v-card-text> -->
-                    
-            <div 
-            class="keywords">
-                <v-btn
-                class="mx-1 my-1"
-                variant="tonal" 
-                v-for="keyword in documentContent.keywords"
-                :key="keyword">{{ keyword }}</v-btn>
-            </div>
-                
-            <v-card-actions mt-auto>
-                <div class="card-footer">
-                    <!-- <md-field id="keywords">
-                        <label for="movies">Keywords</label>
-                        <md-select  v-model="selectedOption" @change="handleOptionSelect"  name="keywords" md-dense>
-                            <md-option v-for="option in documentContent.keywords" :value="option" :key="option"> {{ option }}
-                            </md-option>
-                        </md-select>
-                    </md-field> -->
-                    <!-- <md-button class="md-icon-button">
-                        <thumbs-up @click="voteUp(documentContent.id)"></thumbs-up>
-                        <v-icon icon="fa:fas fa-lock"></v-icon>
-                    </md-button> -->
+                        <v-card-title>
+                            <div 
+                            class="text-decoration-underline"
+                            >{{documentContent.name}}</div>
+                        </v-card-title>
 
+                </v-card-item>
+                        <!-- <v-card-text
+                        class="card-content">
+                            <div @click="documentLink(documentContent)" class="md-subheading">
+                            {{documentContent.summary}}
+                            </div>
+                        </v-card-text> -->
+                        
+                <div 
+                class="pages">
                     <v-btn
-                    class="ma-2"
-                    icon="mdi-thumb-up"></v-btn>
-
-                    <v-btn
-                    class="ma-2"
-                    icon="mdi-thumb-down"></v-btn>
-
-                    <v-btn
-                    class="ma-2"
-                    icon="mdi-bookmark"></v-btn>
-
-                    <!-- <md-button @click="voteDown(documentContent.id)" class="md-icon-button">
-                        <thumb-down></thumb-down>
-                        <v-icon icon="fa:fas fa-lock"></v-icon>
-                    </md-button>
-                    <md-button @click="voteDown(documentContent.id)" class="md-icon-button">
-                        <v-icon icon="fa:fas fa-lock"></v-icon>
-                        <bookmark></bookmark>
-                    </md-button> -->
-                    <!-- <div class="score-box">
-                        <span class="md-headline score-text">{{ moderationScore }}</span>
-                    </div> -->
+                    class="mx-1 my-1 text-decoration-underline"
+                    variant="tonal" 
+                    color="blue"
+                    v-for="keyword in documentContent.keywords"
+                    rounded="xl"
+                    :key="keyword">{{ keyword }}</v-btn>
                 </div>
-            </v-card-actions>
+
+                <div 
+                class="keywords mx-3 my-2">
+                    <div
+                    class="text-uppercase font-weight-bold">
+                        Keywords: &nbsp; 
+                    </div>
+                    <div
+                    variant="plain" 
+                    v-for="keyword in documentContent.keywords"
+                    :key="keyword">{{ keyword }}, &nbsp;</div>
+                </div>
+        
+            </div>
+
+            <div class="action-area">
+                    <div class="card-footer">
+
+                        <v-btn
+                        class="ma-2"
+                        :elevation="0"
+                        icon="mdi-heart"></v-btn>
+
+
+                        <v-btn
+                        class="ma-2"
+                        :elevation="0"
+                        icon="mdi-bookmark"></v-btn>
+                        
+                    </div>
+            </div>
 
         </v-card>
 
@@ -126,28 +126,27 @@ export default {
 <style lang="scss" scoped>
 // @import "node_modules/material-ui-sass/material-ui.scss";
 
+.main-content-area {
+    width: 1100px;
+}
+
   .card-box {
-    flex-direction: column;
     padding: 7px;
-    max-width: 400px; //320px
-    height: 300px;
+    max-width: 1100px; //320px
     margin: 10px;
-    vertical-align: top;
-    flex: 1;
+    display: inline-flex;
   }
 
-//   .card-area {
-//     height: 100%;
+  .action-area {
+    width: 60px;
+  }
+
+
+//   .card-content {
+//     height: 80%;
+//     overflow-y: auto;
 //   }
 
-  .card-content {
-    height: 80%;
-    overflow-y: auto;
-  }
-
-.card-footer {
-    display: flex;
-}
 
 .md-field {
     margin-top: -50px;
@@ -164,15 +163,23 @@ export default {
     padding-top: 5px;
 }
 
-.v-card-actions {
-    justify-content: center;
+.keywords {
+//     // padding-left: 20px;
+//     justify-content: center;
+//     overflow-y: auto;
+//     height: 60%;
+//     padding-right: 20px;
+display: inline-flex;
+margin-top: 10px;
+margin-bottom: 5px
 }
 
-.keywords {
-    // padding-left: 20px;
-    justify-content: center;
-    overflow-y: auto;
-    height: 60%;
-    padding-right: 20px;
+.pages {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.card-footer {
+    width: 50px;
 }
 </style>

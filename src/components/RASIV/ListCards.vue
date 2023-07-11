@@ -26,7 +26,7 @@ export default {
 }
 
 .card-container {
-    display: flex;
+    /* display: flex; */
     flex-wrap: wrap;
     justify-content: left;
     max-width: 1500px;
